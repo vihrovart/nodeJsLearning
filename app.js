@@ -5,6 +5,9 @@ var app = express();
 var urlEncodedParser = bodyParser.urlencoded({extended: false});
 var jsonParser = bodyParser.json();
 
+app.set("view engine", "hbs");
+
+// Роутер
 var productRouter = express.Router();
 
 productRouter.route("/").get(function(req, res){
@@ -19,6 +22,7 @@ app.use("/products", productRouter);
 
 app.use(express.static(__dirname + '/public'));
 
+// Валидация значений на форме
 app.post("/validate", jsonParser, function (req, res) {
   if(!req.body){
     return req.sendStatus(400);
@@ -33,6 +37,7 @@ app.post("/validate", jsonParser, function (req, res) {
   res.json("");
 });
 
+// Отправка формы
 app.post("/register", urlEncodedParser, function(req, res){
   if(!req.body){
     return res.send("400");
@@ -49,12 +54,19 @@ app.get("/", function(req, res){
 
 app.get("/about", function(req, res){
   res.send("<h2>About</h2>")
-})
+});
 
+// Вывод по шаблону
 app.get("/contacts", function(req, res){
-  res.send("<h2>Contacts</h2>")
-})
+  res.render("contact.hbs", {
+    title: "Контакты",
+    emails: ["blabla@bla.ru","trololo@lolo.ru"],
+    phone: "555-555",
+    emailsVisible: true,
+  });
+});
 
+// Эхо запрос
 app.get("/echo/:echo", function(req, res){
   res.send(`<h2>Echo:${req.params['echo']}</h2>`)
 })
