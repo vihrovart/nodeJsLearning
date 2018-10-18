@@ -1,11 +1,13 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var hbs = require('hbs');
 
 var app = express();
 var urlEncodedParser = bodyParser.urlencoded({extended: false});
 var jsonParser = bodyParser.json();
 
 app.set("view engine", "hbs");
+hbs.registerPartials(__dirname + "/views/partials");
 
 // Роутер
 var productRouter = express.Router();
@@ -49,7 +51,7 @@ app.post("/register", urlEncodedParser, function(req, res){
 });
 
 app.get("/", function(req, res){
-  res.send("<h2>Hello!</h2>");
+  res.render("home.hbs")
 });
 
 app.get("/about", function(req, res){
