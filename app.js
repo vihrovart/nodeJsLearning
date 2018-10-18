@@ -1,5 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var fs = require('fs');
+var users = require('./users');
 var hbs = require('hbs');
 require('./hbs_helpers');
 
@@ -9,6 +11,18 @@ var jsonParser = bodyParser.json();
 
 app.set("view engine", "hbs");
 hbs.registerPartials(__dirname + "/views/partials");
+
+// Роутер для пользователей
+var usersRouter = express.Router();
+usersRouter.route("/").get(function(reg,res){
+  res.render("users.hbs", {users: users.getAllUsers()});
+});
+
+usersRouter.route("/:id").get(function(req, res){
+  res.send(users.getUserById(req.params.id));
+});
+
+app.use("/users", usersRouter);
 
 // Роутер
 var productRouter = express.Router();

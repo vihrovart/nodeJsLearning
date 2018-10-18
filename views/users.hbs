@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Пользователи</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    {{> menu}}
+    <h1>Пользователи</h1>
+    <div>
+      {{#each users}}
+        <div><a href="users/{{id}}">{{name}}</a></div>
+      {{/each}}
+    </div>
+    {{> footer}}
+</body>
+<html>
