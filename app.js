@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var hbs = require('hbs');
+require('./hbs_helpers');
 
 var app = express();
 var urlEncodedParser = bodyParser.urlencoded({extended: false});
@@ -51,7 +52,7 @@ app.post("/register", urlEncodedParser, function(req, res){
 });
 
 app.get("/", function(req, res){
-  res.render("home.hbs")
+  res.render("home.hbs", {departments: ['Moscow', 'Rostov']})
 });
 
 app.get("/about", function(req, res){
