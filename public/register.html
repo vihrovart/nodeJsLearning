@@ -24,19 +24,22 @@
         var userName = registerForm.elements["userName"].value;
         var userAge = registerForm.elements["userAge"].value;
 
+        var usersUrl = "/users";
+
         $.ajax({
           type: "POST",
-          url: "/validate",
+          url: usersUrl,
           data: JSON.stringify({"userName": userName, "userAge": userAge}),
           contentType: "application/json",
           dataType: "json",
           success: function(data){
-            if(data){
-              message(data);
+            if(!data.message){
+              message(`Данные сохранены под номером ${data.id}`);
+              window.location.href = usersUrl;
               return;
             }
 
-            message("Данные сохранены");
+            message(data.message);
           },
         });
       });

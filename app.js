@@ -19,7 +19,20 @@ usersRouter.route("/").get(function(reg,res){
 });
 
 usersRouter.route("/:id").get(function(req, res){
-  res.send(users.getUserById(req.params.id));
+  var user = users.getUserById(req.params.id);
+  res.render("user_view.hbs", user);
+});
+
+usersRouter.post("/", jsonParser, function(req, res){
+  if(!req.body) return res.sendStatus(400);
+
+  var user = {name: req.body.userName, age :req.body.userAge };
+
+  var newUser = users.addNewUser({
+    user: user,
+    onFail: (x) => res.send({message: x}),
+    onSuccess: (x) => res.send({id: x.id}),
+  });
 });
 
 app.use("/users", usersRouter);
