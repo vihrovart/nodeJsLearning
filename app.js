@@ -86,6 +86,10 @@ app.get("/about", function(req, res){
   res.send("<h2>About</h2>")
 });
 
+app.get("/expressTest", function(req, res){
+  res.send({test: "test"});
+});
+
 // Вывод по шаблону
 app.get("/contacts", function(req, res){
   res.render("contact.hbs", {
@@ -102,3 +106,5 @@ app.get("/echo/:echo", function(req, res){
 })
 
 app.listen(3000);
+
+module.exports.app = app;
