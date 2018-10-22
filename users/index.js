@@ -4,6 +4,10 @@ var usersFileName = "./users/users.json";
 var codepageDefault = "UTF8";
 
 var users = {
+  saveData: function(users){
+    var data = JSON.stringify(users);
+    fs.writeFileSync(usersFileName, data);
+  },
   // Получить всех пользователей
   getAllUsers: function(){
     var content = fs.readFileSync(usersFileName, codepageDefault);
@@ -30,11 +34,24 @@ var users = {
 
     user.id = this.getNextId(users);
     users.push(user);
-    var data = JSON.stringify(users);
-    fs.writeFileSync(usersFileName, data);
+    this.saveData(users);
 
     if(!options.onSuccess) return;
     options.onSuccess(user);
+  },
+  removeUser: function(id){
+    var users = this.getAllUsers();
+    var self = this;
+    var result = false;
+    users.forEach(function(element, index, array){
+      if(element.id == id){
+        users.splice(index, 1);
+        self.saveData(users);
+        result = true;
+      }
+    });
+
+    return result;
   },
   // Получить свободный идентификатор
   getNextId: function(users){
@@ -59,11 +76,14 @@ var users = {
   },
   // Пользователь уже существует в базе
   userExist: function(user, users){
+    if(!users){
+      users = this.getAllUsers();
+    }
+
     var user = users.find((x) => x.name == user.name && x.age == user.age);
 
-    console.log(user);
     return user != undefined;
-  }
+  },
 };
 
 module.exports = users;
