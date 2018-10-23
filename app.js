@@ -50,6 +50,7 @@ productRouter.route("/:id").get(function(req, res){
 
 app.use("/products", productRouter);
 
+// Установка директории public как директории которая смотрит наружу
 app.use(express.static(__dirname + '/public'));
 
 // Валидация значений на форме

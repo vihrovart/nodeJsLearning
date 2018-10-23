@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Hello React</title>
+</head>
+<style>
+    .buttonToggle{
+        border-radius: 20px;
+        cursor: pointer;
+        padding: 5px;
+        font-family: Tahoma;
+        text-align: center;
+        width: 200px;
+    }
+    .on{
+        background-color: #96c790;
+        border: 1px solid #3dab39;
+        color: #f2fff2;
+    }
+    .off{
+        background-color: #909ec7;
+        border: 1px solid #3955ab;
+        color: #f2f5ff;
+    }
+</style>
+<body>
+    <div id='header'></div>
+    <div id="app"></div>
+    <div id="toggle"></div>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.min.js"></script>
+    <script type="text/babel" src="index.jsx"></script>
+</body>
+</html>
