@@ -1,11 +1,32 @@
 // Реализация компонента по средства ES6 как класс наследник от React.Component
 class Hello extends React.Component {
+    constructor(props){
+        super(props);
+
+        this.state = {name: props.name, date: new Date()};
+    }
+
+    componentDidMount(){
+        this.timerId = setInterval(
+            () => this.tick(),
+            1000
+        );
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.timerId);
+    }
+
+    tick(){
+        this.setState({date: new Date()});
+    }
+
     render(){
-        return <h1>Yo! {this.props.name} {new Date().toLocaleTimeString()}</h1>
+        return <h1>Yo! {this.state.name} {this.state.date.toLocaleTimeString()}</h1>
     }
 }
 
-// РЕализация компонента как "стрелочной функции"
+// Реализация компонента как "стрелочной функции"
 const Header = (props) => {
     const {siteName}  = props;
 
@@ -41,13 +62,7 @@ ReactDOM.render(
     document.getElementById("header")
 )
 
-function tick(){
     ReactDOM.render(
         <Hello name='Artem'></Hello>,
         document.getElementById("app")
     );
-}
-
-tick();
-
-setInterval(tick, 1000);
