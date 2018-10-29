@@ -1,0 +1,18 @@
+{
+  "name": "react-redux-koa-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "supervisor index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.6.1",
+    "koa-body": "^4.0.4",
+    "koa-morgan": "^1.0.1",
+    "koa-router": "^7.4.0"
+  }
+}

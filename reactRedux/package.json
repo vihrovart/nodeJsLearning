@@ -1,0 +1,12 @@
+{
+  "name": "reactredux",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd react-redux-koa-backend && npm start \" \"cd immutable-redux-cra && npm start\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
