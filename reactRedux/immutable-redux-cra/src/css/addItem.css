@@ -1,0 +1,47 @@
+.addItemContainer{
+    padding: 5px;
+}
+
+.addItemTitle {
+    padding: 5px;
+    font-weight: bold;
+}
+
+.addItemElementsContainer input{
+    margin-right: 5px;
+    border-radius: 7px;
+    border-width: 1px;
+    padding: 3px;
+    border-color: black;
+}
+
+.addItemCount {
+    width: 50px;
+    text-align: center;
+}
+
+.addItemSave {
+    border-radius: 7px;
+}
+
+.button {
+    background-color: #abcdff;
+    display: inline-block;
+    text-align: center;
+    padding: 3px;
+    min-width: 50px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #75adff;
+}
+
+.notValidValue {
+    background-color: #ffe6e6;
+}
+
+.validateMessage{
+    padding: 4px;
+    color: red;
+}

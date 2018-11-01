@@ -9,6 +9,7 @@ import { ofType } from 'redux-observable';
 import 'rxjs'
 
 import * as actionTypes from './constants/actionTypes'
+import * as actions from './actions/actions';
 
 // Создаем эпик обрабатывающий поток событий на выходе (т.е. после окончания асинхронного запроса процесс приходит сюда, после чего перенаправляется в редьюсер)
 const likeFulfilled = payload => ({ type: actionTypes.ADD_LIKE_FULFILLED, payload });
@@ -28,7 +29,7 @@ const itemFulfilled = payload => ({ type: actionTypes.GET_ITEMS_FULFILLED, paylo
 const itemEpic = (action$, state$) => {
     return action$.pipe(
         ofType(actionTypes.GET_ITEMS),
-        mergeMap(action => ajax.getJSON('/api/getitems ').pipe(
+        mergeMap(action => ajax.getJSON('/api/getitems').pipe(
             map(res => itemFulfilled(res)))
         )
     );
@@ -57,7 +58,7 @@ const initialStore = Map({
     views: 0,
     likes: 0,
     dislikes: 0,
-    items: [{ title: "...", count: 0 }],
+    items: [],
     itemBufer: {title: "", count: 0}
 });
 
@@ -88,5 +89,9 @@ const epictMiddleware = createEpicMiddleware()
 const store = createStore(reducer, initialStore, applyMiddleware(epictMiddleware));
 
 epictMiddleware.run(rootEpic);
+
+(async function(){
+    await store.dispatch(actions.getItems());
+})();
 
 export default store
