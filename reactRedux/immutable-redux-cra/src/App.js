@@ -3,53 +3,8 @@ import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionsType from './constants/actionTypes';
 import * as actions from './actions/actions';
-
-class Items extends Component {
-  render(){
-    return (
-      <div>
-        Элементы
-        <div>{ this.props.items.map(item => {
-          return <Item item={item} />
-        })}</div>
-      </div>
-      
-    )
-  }
-}
-
-class Item extends Component {
-  render() {
-    return (
-      <div>
-        <div>Title: { this.props.item.title } ({this.props.item.count })</div>
-      </div>
-    );
-  }
-}
-
-class AddItem extends Component {
-  constructor(props){
-    super(props);
-    this.state = {title: "", count: 0};
-    this.handleChangeTitle = this.handleChangeTitle.bind(this);
-    this.handleAddItem = this.handleAddItem.bind(this);
-  }
-  handleChangeTitle(e){
-    this.state.title = e.target.value;
-  }
-  handleAddItem(){
-    this.props.addItem(this.state);
-  }
-  render() {
-    return (
-      <div>
-        Добавить элемент
-        <input type='text' placeholder='Введите название элемента' onChange={this.handleChangeTitle}></input><button onClick={this.handleAddItem}>+</button>
-      </div>
-    );
-  }
-}
+import Items from './app/components/Items';
+import AddItem from './app/components/AddItem';
 
 class App extends Component {
   render() {
@@ -59,7 +14,6 @@ class App extends Component {
         <div>
           <p>Views: {this.props.views}</p>
           +{this.props.likes} -{this.props.dislikes}
-
         </div>
         <div>
           <AddItem addItem={this.props.addItem} />
