@@ -3,15 +3,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from "react-redux";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 import store from "./store";
 
 import App from './App';
+import About from "./app/components/About"
 
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
 <Provider store={store}>
-    <App />
+    <Router>
+        <Switch>
+            <Route exact path="/" component={App} />
+            <Route path="/about" component={About} />
+            <Route children={() =><h2>Not found!</h2> } />
+        </Switch>
+    </Router>
 </Provider>
 ,
  document.getElementById('root'));
