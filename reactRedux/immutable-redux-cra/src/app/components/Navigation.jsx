@@ -8,7 +8,9 @@ class Navigation extends Component {
             <nav>
                 <NavLink activeClassName='navActive' className="nav" exact to="/">Главная</NavLink>
                 <NavLink activeClassName='navActive' className="nav" to="/about/company">О компании</NavLink>
-                <NavLink activeClassName='navActive' className="nav" to="/about/project">О проекте</NavLink>
+                <NavLink activeClassName='navActive' className="nav" exact to="/about/project">О проекте</NavLink>
+                <NavLink activeClassName='navActive' className="nav" to="/about/project/Венера">О проекте Венера</NavLink>
+                <NavLink activeClassName='navActive' className="nav" to="/about/item/1">О первом элементе</NavLink>
             </nav>
         );
     }
