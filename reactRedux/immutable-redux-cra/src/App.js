@@ -5,12 +5,13 @@ import * as actionsType from './constants/actionTypes';
 import * as actions from './actions/actions';
 import Items from './app/components/Items';
 import AddItem from './app/components/AddItem';
+import Navigation from "./app/components/Navigation"
 
 class App extends Component {
   render() {
     return (
       <div>
-        Empty
+        <Navigation />
         <div>
           <p>Views: {this.props.views}</p>
           +{this.props.likes} -{this.props.dislikes}
