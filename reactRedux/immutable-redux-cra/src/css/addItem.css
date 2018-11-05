@@ -7,12 +7,24 @@
     font-weight: bold;
 }
 
+.addItemElementsContainer {
+    background-color: #bbb;
+    padding: 5px;
+    border-radius: 5px;
+}
+
 .addItemElementsContainer input{
     margin-right: 5px;
-    border-radius: 7px;
+    height: 20px;
+    border-radius: 3px;
     border-width: 1px;
-    padding: 3px;
-    border-color: black;
+    padding: 3px 3px 3px 8px;
+    border: none;
+    font-size: 15px;
+}
+
+.addItemElementsContainer input:focus{
+    outline: none;
 }
 
 .addItemCount {
@@ -21,7 +33,13 @@
 }
 
 .addItemSave {
-    border-radius: 7px;
+    border-radius: 3px;
+}
+
+.addItemDate{
+    width: 100px;
+    text-align: center;
+    padding-left: 0px !important;
 }
 
 .button {
@@ -31,6 +49,8 @@
     padding: 3px;
     min-width: 50px;
     cursor: pointer;
+    vertical-align: top;
+    height: 20px;
 }
 
 .button:hover {

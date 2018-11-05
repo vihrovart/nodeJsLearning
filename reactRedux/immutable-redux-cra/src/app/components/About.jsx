@@ -56,7 +56,7 @@ class AboutItem extends Component {
 
     renderItem(item){
         console.log(item);
-        return (<div>Title: {item.title}, count: {item.count}</div>);
+        return (<div>Title: {item.title}, count: {item.count}, date: {item.date}</div>);
     }
     render(){
         console.log(this);

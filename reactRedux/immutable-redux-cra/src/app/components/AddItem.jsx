@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import '../../css/addItem.css';
+import moment from 'moment';
+import 'moment/min/moment-with-locales'
+import DatePicker from "react-datepicker"
+import 'moment/locale/ru'
+import "react-datepicker/dist/react-datepicker.css";
 
 class AddItem extends Component {
     constructor(props){
       super(props);
-      this.state = {title: "", titleIsValid: false, count: 0, countIsValid: false};
+      this.state = {title: "", titleIsValid: false, count: 0, countIsValid: false, date: moment()};
       this.handleChangeTitle = this.handleChangeTitle.bind(this);
       this.handleChangeCount = this.handleChangeCount.bind(this);
+      this.handleChangeDate = this.handleChangeDate.bind(this);
       this.handleAddItem = this.handleAddItem.bind(this);
     }
     handleChangeTitle(e){
@@ -16,6 +22,9 @@ class AddItem extends Component {
     handleChangeCount(e){
       this.validateCount(e.target.value);
       this.setState({ count: e.target.value});
+    }
+    handleChangeDate(e){
+      this.setState({date: e});
     }
     handleAddItem(){
       if(!this.validate()){
@@ -65,6 +74,7 @@ class AddItem extends Component {
           <div className='addItemElementsContainer'>
             <input type='text' className={titleValidClassName} placeholder='Введите название элемента' onChange={this.handleChangeTitle} value={this.state.title}></input>
             <input className={'addItemCount ' + countValidClassName} type='text' placeholder='Количество' onChange={this.handleChangeCount} value={this.state.count}></input>
+            <DatePicker className="addItemDate" dateFormat="DD.MM.YYYY" selected={this.state.date} onChange={this.handleChangeDate} />
             <div className='button addItemSave' onClick={this.handleAddItem}>+</div>
           </div>
           <div className="validateMessage" dangerouslySetInnerHTML={{__html: this.state.message}} />

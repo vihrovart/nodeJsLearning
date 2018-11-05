@@ -14,7 +14,8 @@ const db = new Sequelize("nodejs", "postgres", "1q2w3e$R", {
 
 const Item = db.define('item', {
     title: Sequelize.STRING,
-    count: Sequelize.INTEGER
+    count: Sequelize.INTEGER,
+    date: Sequelize.DATE
 })
 
 db.sync({force: true}).then(() => {

@@ -6,16 +6,15 @@ import * as actions from './actions/actions';
 import Items from './app/components/Items';
 import AddItem from './app/components/AddItem';
 import Navigation from "./app/components/Navigation"
+import EventsHeader from "./app/components/EventsHeader"
+import './css/main.css'
 
 class App extends Component {
   render() {
     return (
       <div>
         <Navigation />
-        <div>
-          <p>Views: {this.props.views}</p>
-          +{this.props.likes} -{this.props.dislikes}
-        </div>
+        <EventsHeader />
         <div>
           <AddItem addItem={this.props.addItem} />
           <Items items={this.props.items} />

@@ -59,7 +59,7 @@ const initialStore = Map({
     likes: 0,
     dislikes: 0,
     items: [],
-    itemBufer: {title: "", count: 0}
+    itemBufer: {title: "", count: 0, date: ""}
 });
 
 // Создаем редьюсер (для синхронный экшенов)
