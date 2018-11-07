@@ -9,7 +9,7 @@ const actions = require("./actions/actions");
 const operations = require("./constants/actionsOperations")
 const actionsHelper = require("./helpers/actionsHelper");
 
-var itemEpics = new actionsHelper.ItemEpics(actionTypes.Product, "/api/crud/category");
+var itemEpics = new actionsHelper.ItemEpics(actionTypes.Product, "/api/crud/product");
 
 // Комбинируем эпики в один
 const rootEpic = combineEpics(
@@ -29,7 +29,7 @@ const reducer = (state, action) => {
 
     switch(action.type){
         case actionTypes.Product[operations.getItems_fulfilled] :
-            return state.set('categories', action.payload);
+            return state.set('products', action.payload);
         default:
             return state;
     }

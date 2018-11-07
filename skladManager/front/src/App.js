@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 import './App.css';
+import Products from './components/Products';
 
 const actionsHelper = require("./helpers/actionsHelper");
 const actions = require("./actions/actions");
@@ -13,9 +14,9 @@ class App extends Component {
     return (
       <div>
           <h1>Система "Склад"</h1>
-          <div>{this.props.categories.map(item => {
-            return <div key={item.id}>{item.title}<button onClick={this.props.product_delItem(item.id)}>Удалить</button></div>
-          })}</div>
+          <div>
+            <Products items={this.props.products} />
+          </div>
           <button onClick={this.props.product_getItems}>GetItems</button>
       </div>
     );
@@ -24,7 +25,8 @@ class App extends Component {
 
 // Входные точки для получения чего то из текущего состояния
 const mapStateToProp = state => ({
-  categories: state.get('categories')
+  categories: state.get('categories'),
+  products: state.get('products')
 });
 
 const mapDispatchToProp2 = (dispatch) => bindActionCreators(actionsHelper.makeActionCreator(actions.Product), dispatch);
