@@ -7,7 +7,7 @@ class Product extends Component {
 
     render(){
         return (
-            <div>{this.props.item.title}</div>
+            <div>{this.props.item.title} ({this.props.item.Category.title}/{this.props.item.Section.title})</div>
         );
     }
 }

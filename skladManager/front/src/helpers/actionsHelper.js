@@ -65,7 +65,7 @@ export class ItemEpics{
         return action$.pipe(
             ofType(this.actionType[operations.putItem]),
             mergeMap(action => ajax.put(`${this.actionsUrl}\\${action.id}`, action.item).pipe(
-                map(res => this.putItemFulfilled(res)))
+                map(res => this.putItemFulfilled(res.response)))
             )
         );
     }
@@ -82,10 +82,8 @@ export class ItemEpics{
     }
 
     getAllMyEpics = () => {
-        return [ this.addItemEpic, this.getItemsEpic, this.getItemEpic ];
+        return [ this.addItemEpic, this.getItemsEpic, this.getItemEpic, this.putItemEpic, this.deleteItemEpic ];
     }
-
-    // TODO: дописать эпики
 }
 
 export function ItemActions(actionsType){

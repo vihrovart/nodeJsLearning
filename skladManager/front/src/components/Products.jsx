@@ -6,9 +6,14 @@ class Products extends Component {
         super(props);
     }
 
+    componentWillMount(){
+        this.props.getItems();
+    }
+
     render() {
         return (
             <div>
+                <h2>Товары</h2>
                 {this.props.items.map(item => {
                     return <Product key={item.id} item={item} />
                 })}

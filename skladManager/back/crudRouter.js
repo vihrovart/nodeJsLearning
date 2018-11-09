@@ -1,6 +1,6 @@
 const Router = require("koa-router");
 
-function CreateRouter(model, bodyParser){
+function CreateRouter(model, bodyParser, includes){
     var router = new Router();
     var urlPrefix = "/api/crud/";
 
@@ -8,13 +8,13 @@ function CreateRouter(model, bodyParser){
     
     // get all items
     router.get(`${urlPrefix}${modelName}`, async ctx => {
-        var items = await model.findAll();
+        var items = await model.findAll(includes);
         ctx.body = items;
     });
 
     // get item by id
     router.get(`${urlPrefix}${modelName}/:id`, async ctx => {
-        var item = await model.findById(ctx.params.id);
+        var item = await model.findById(ctx.params.id, includes);
 
         if(item != null){
             return ctx.body = item;
