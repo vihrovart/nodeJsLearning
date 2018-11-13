@@ -10,3 +10,13 @@
 .navigationLinkActive{
   color: red;
 }
+
+.listItem {
+  padding-right: 10px;
+  min-width: 400px;
+  display: inline-block;
+}
+
+.listItemDelete{
+  padding-left: 10px;
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ElementForm from './ElementForm';
+import ViewForm from './ViewForm';
 
 class Section extends Component {
     render(){
@@ -9,7 +9,7 @@ class Section extends Component {
 
         return (
             <div>
-                <ElementForm {...this.props} fields={fields} />
+                <ViewForm {...this.props} fields={fields} />
             </div>
         );
     }

@@ -24,7 +24,10 @@ export class ItemEpics{
     constructor(actionType, actionsUrl){
         this.actionType = actionType;
         this.actionsUrl = actionsUrl;
+        console.log(this.actionType[operations.delItem]);
     }
+
+    // TODO : Добавить обработку ошибок
 
     // Add item epic
     addItemFulfilled = payload => ({ type: this.actionType[operations.addItem_fulfilled], payload });
@@ -60,24 +63,40 @@ export class ItemEpics{
     }
 
     // Put item epic
-    putItemFulfilled = payload => ({ type: this.actionType[operations.putItem_fulfilled], payload });
+    putItemFulfilled = (payload) => ({ type: this.actionType[operations.putItem_fulfilled], payload });
     putItemEpic = (action$, state$) => {
         return action$.pipe(
             ofType(this.actionType[operations.putItem]),
-            mergeMap(action => ajax.put(`${this.actionsUrl}\\${action.id}`, action.item).pipe(
+            mergeMap(action => ajax.put(`${this.actionsUrl}/${action.id}`, action.item).pipe(
                 map(res => this.putItemFulfilled(res.response)))
-            )
+            ),
+
+            (t) => {
+                console.log("sdfsdf");
+                return t;
+            }
         );
     }
+
+    
+    
 
     // Delete item epic
     deleteItemFulfilled = payload => ({ type: this.actionType[operations.deleteItem_fulfilled], payload });
     deleteItemEpic = (action$, state$) => {
         return action$.pipe(
+
+
             ofType(this.actionType[operations.deleteItem]),
-            mergeMap(action => ajax.delete(`${this.actionsUrl}\\${action.id}`).pipe(
+            
+            mergeMap(action => ajax.get(`${this.actionsUrl}/${action.id}`).pipe(
                 map(res => this.deleteItemFulfilled(res)))
-            )
+            ),
+
+            (t) => {
+                console.log("sdfsdf");
+                return t;
+            }
         );
     }
 

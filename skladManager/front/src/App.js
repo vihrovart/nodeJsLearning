@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 import './App.css';
 import Products from './components/Products';
-import ItemsList from "./components/ItemsList";
 import Categories from "./components/Category/Categories"
 import Category from "./components/Category/Category"
 import Sections from "./components/Sections"
@@ -28,20 +27,29 @@ class App extends Component {
           <div>
             <Switch>
               <Route exact path="/" render={(props) => <Products items={this.props.products} getItems={this.props.product_getItems} />} />
-              <Route exact path="/category/" render={(props) => <Categories routeProps={props} items={this.props.categories} getItems={this.props.category_getItems} />} />
+              <Route exact path="/category/" render={(props) => 
+                <Categories 
+                  routeProps={props} 
+                  items={this.props.categories} 
+                  getItems={this.props.category_getItems}
+                  deleteAction={this.props.category_delItem} />} />
               <Route path="/category/edit/:id" render={(props) => 
                 <CategoryEdit 
-                  mode={constants.formMode.edit} 
+                  mode={constants.formMode.edit}
                   routeProps={props} 
                   getItem={this.props.category_getItem} 
                   item={this.props.category}
-                  saveAction={this.props.category_putItem} />} 
+                  saveAction={this.props.category_putItem}
+                  backUrl="/category"
+                  categoryFormStatus={this.props.categoryFormStatus} />} 
               />
               <Route path="/category/create" render={(props) => 
                 <CategoryEdit 
                   mode={constants.formMode.create} 
                   routeProps={props} 
-                  saveAction={this.props.category_addItem} />} 
+                  saveAction={this.props.category_addItem}
+                  backUrl="/category"
+                  categoryFormStatus={this.props.categoryFormStatus} />} 
               />
               <Route path="/category/:id" render={(props) => 
                 <Category
@@ -65,7 +73,8 @@ const mapStateToProp = state => ({
   categories: state.get('categories'),
   sections: state.get('sections'),
   category: state.get('category'),
-  section: state.get('section')
+  section: state.get('section'),
+  categoryFormStatus: state.get('categoryFormStatus')
 });
 
 const mapDispatchToProp2 = (dispatch) => bindActionCreators(

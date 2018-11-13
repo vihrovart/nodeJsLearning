@@ -7,3 +7,10 @@ export const formMode = {
 export const fieldType = {
     string: 'string'
 }
+
+export const formStatus = {
+    static: "STATIC",
+    inProgress: "INPROGRESS",
+    sucess: "SUCESS",
+    fail: "FAIL"
+}

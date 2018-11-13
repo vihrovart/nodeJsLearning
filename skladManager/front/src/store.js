@@ -3,6 +3,7 @@ import { Map } from 'immutable'
 import { composeWithDevTools } from 'remote-redux-devtools'
 import { createEpicMiddleware, combineEpics } from 'redux-observable'
 import 'rxjs'
+import * as constants from './constants/constants';
 
 const actionTypes = require('./constants/actionsTypes');
 const actions = require("./actions/actions");
@@ -26,30 +27,46 @@ const initialStore = Map({
     categories: [],
     products: [],
     category: {},
-    section: {}
-});
+    section: {},
+    categoryFormStatus: constants.formStatus.static
+})
 
 // Создаем редьюсер (для синхронный экшенов)
-const reducer = (state, action) => {
-    console.log(action);
+var reducer = function(state, action){
+    console.log(action, state);
 
     switch(action.type){
         case actionTypes.Product[operations.getItems_fulfilled] :
             return state.set('products', action.payload);
+
         case actionTypes.Category[operations.getItems_fulfilled] :
             return state.set('categories', action.payload);
+
         case actionTypes.Category[operations.putItem_fulfilled] :
-            return state.set('category', action.payload);
+            return state
+            .set('categoryFormStatus', constants.formStatus.sucess)
+            .set('category', action.payload);
+        
+        case actionTypes.Category[operations.addItem_fulfilled] :
+            return state
+            .set('categoryFormStatus', constants.formStatus.sucess)
+            .set('category', action.payload);
+
+        case actionTypes.Category[operations.getItem_fulfilled] :
+            return state
+            .set('categoryFormStatus', constants.formStatus.static)
+            .set('category', action.payload);
+
         case actionTypes.Section[operations.getItems_fulfilled] :
             return state.set('sections', action.payload);
-        case actionTypes.Category[operations.getItem_fulfilled] :
-            return state.set('category', action.payload);
+
         case actionTypes.Section[operations.getItem_fulfilled] :
             return state.set('section', action.payload);
+
         default:
             return state;
     }
-};
+}
 
 // Создаем миддлеваре
 const epictMiddleware = createEpicMiddleware()

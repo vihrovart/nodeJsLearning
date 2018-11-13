@@ -45,6 +45,9 @@ function CreateRouter(model, bodyParser, includes){
 
     // delete item by id
     router.delete(`${urlPrefix}${modelName}/:id`, async ctx => {
+        console.log("delete item...");
+        
+
         var item = await model.destroy({ where: {id: ctx.params.id}});
 
         console.log(item);

@@ -1,50 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import itemLoad from "../hoc/itemLoad";
-import * as constants from '../../constants/constants'
+import EditFormBase from '../EditFormBase'
+import { Redirect } from 'react-router-dom'
+import * as constants from "../../constants/constants"
 
-class CategoryEditForm extends Component {
-    constructor(props){
-        super(props);
-
-        var getValueOrDefault = (value) => this.isEdit ? value : ""
-
+class CategoryEditForm extends EditFormBase {
+    getState(){
         var title = this.getValueOrDefault("title");
         var color = this.getValueOrDefault("color");
 
-        this.state = {title: title, color: color};
-
-        this.handleFieldChange = this.handleFieldChange.bind(this);
-        this.save = this.save.bind(this);
-        this.isEdit = this.isEdit.bind(this);
-        this.getValueOrDefault = this.getValueOrDefault.bind(this);
-    }
-
-    getValueOrDefault(memberName){
-        if(!this.isEdit){
-            return "";
-        }
-
-        return this.props.item[memberName];
-    }
-
-    handleFieldChange(e){
-        this.setState({[e.target.attributes.datafieldname.nodeValue]: e.target.value});
-    }
-
-    isEdit(props){
-        return props.mode == constants.formMode.edit
-    }
-
-    save(){
-        if(this.isEdit){
-            this.props.saveAction(this.props.item.id , this.state);
-        }
-
-        this.props.saveAction(this.state);
+        return {title: title, color: color};
     }
 
     render() {
         console.log(this.state, this.props);
+
+        if(this.props.categoryFormStatus == constants.formStatus.sucess){
+            return <Redirect to={this.props.backUrl}/>
+        }
 
         return (
             <div>

@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import Product from './Product';
 
 class Products extends Component {
-    constructor(props){
-        super(props);
-    }
-
     componentWillMount(){
         this.props.getItems();
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import ElementForm from '../ElementForm';
+import ViewForm from '../ViewForm';
 import * as constants from "../../constants/constants"
+import ItemLoad from "../hoc/itemLoad"
 
 class Category extends Component {
     render(){
@@ -10,10 +11,9 @@ class Category extends Component {
         ];
 
         return (
-            <ElementForm {...this.props} fields={fields} />
+            <ViewForm {...this.props} fields={fields} />
         );
     }
 }
 
-
-export default Category; 
+export default ItemLoad(Category); 
