@@ -1,7 +1,8 @@
 import { ofType } from 'redux-observable'
 import { ajax } from 'rxjs/observable/dom/ajax'
+import { Map } from 'immutable'
 import { mergeMap, map } from 'rxjs/operators';
-
+import * as constants from '../constants/constants';
 const operations = require( "../constants/actionsOperations");
 
 export function GetActionTypes (name){
@@ -20,7 +21,8 @@ export function GetActionTypes (name){
     }
 }
 
-export class ItemEpics{
+// Создать эпики crud для сущности
+export class EntryEpics{
     constructor(actionType, actionsUrl){
         this.actionType = actionType;
         this.actionsUrl = actionsUrl;
@@ -69,42 +71,87 @@ export class ItemEpics{
             ofType(this.actionType[operations.putItem]),
             mergeMap(action => ajax.put(`${this.actionsUrl}/${action.id}`, action.item).pipe(
                 map(res => this.putItemFulfilled(res.response)))
-            ),
-
-            (t) => {
-                console.log("sdfsdf");
-                return t;
-            }
+            )
         );
     }
 
-    
-    
-
-    // Delete item epic
-    deleteItemFulfilled = payload => ({ type: this.actionType[operations.deleteItem_fulfilled], payload });
-    deleteItemEpic = (action$, state$) => {
-        return action$.pipe(
-
-
-            ofType(this.actionType[operations.deleteItem]),
-            
-            mergeMap(action => ajax.get(`${this.actionsUrl}/${action.id}`).pipe(
-                map(res => this.deleteItemFulfilled(res)))
-            ),
-
-            (t) => {
-                console.log("sdfsdf");
-                return t;
-            }
+    // Delete item by id epic
+    delItemFulfilled = ( payload, itemId ) => ({ type: this.actionType[operations.delItem_fulfilled], payload, itemId });
+    delItemEpic = (action$, state$) => {
+        return action$.pipe(x => { console.log("delete debug"); return x }).pipe(
+            ofType(this.actionType[operations.delItem]),
+            mergeMap(action => ajax.delete(`${this.actionsUrl}/${action.id}`).pipe(
+                map(res => this.delItemFulfilled(res, action.id)))
+            )
         );
     }
 
     getAllMyEpics = () => {
-        return [ this.addItemEpic, this.getItemsEpic, this.getItemEpic, this.putItemEpic, this.deleteItemEpic ];
+        return [ this.addItemEpic, this.getItemsEpic, this.getItemEpic, this.putItemEpic, this.delItemEpic ];
     }
 }
 
+// Создать пропсы
+export function MakeEntryProps(itemActions, state){
+    var prefix = itemActions.getPrefix();
+
+    return {
+        [constants.stateProperty.items]: state[prefix].get(constants.stateProperty.items),
+        [constants.stateProperty.formStatus]: state[prefix].get(constants.stateProperty.formStatus),
+        [constants.stateProperty.item]: state[prefix].get(constants.stateProperty.item),
+    }
+}
+
+// Создать стандартный Crud редьюсер для сущности
+export function EntryReducer(actionType){
+    const defaultState = Map({
+        [constants.stateProperty.items]: [],
+        [constants.stateProperty.formStatus]: constants.formStatus.static,
+        [constants.stateProperty.item]: {}
+    });
+
+    return function(state = defaultState, action){
+        var reducers = {};
+
+        // get items reducer
+        reducers[actionType[operations.getItems_fulfilled]] = () => state
+            .set(constants.stateProperty.items, action.payload);
+
+        // put item
+        reducers[actionType[operations.putItem_fulfilled]] = () => state
+            .set(constants.stateProperty.formStatus, constants.formStatus.sucess)
+            .set(constants.stateProperty.item, action.payload);
+
+        // add item
+        reducers[actionType[operations.addItem_fulfilled]] = () => {
+            var items = state.get(constants.stateProperty.items);
+            items.push(action.payload);
+            return state
+            .set(constants.stateProperty.formStatus, constants.formStatus.sucess)
+            .set(constants.stateProperty.items, items);
+        }
+
+        // get item
+        reducers[actionType[operations.getItem_fulfilled]] = () => state
+            .set(constants.stateProperty.formStatus, constants.formStatus.static)
+            .set(constants.stateProperty.item, action.payload);
+
+        // del item
+        reducers[actionType[operations.delItem_fulfilled]] = () => {
+            var items = state.get(constants.stateProperty.items);
+            return state.set(constants.stateProperty.items, items.filter(x => x.id !== action.itemId));}
+
+        var reducerAction = reducers[action.type];
+
+        if(reducerAction){
+            return reducerAction();
+        }
+
+        return state;
+    };
+}
+
+// Создать экшены crud для сущности
 export function ItemActions(actionsType){
     return {
         // Add item
@@ -138,6 +185,7 @@ export function ItemActions(actionsType){
     }
 }
 
+// Построить экшн креэйтор для сущности
 export function makeActionCreator(itemActions){
     var prefix = itemActions.getPrefix();
         return {

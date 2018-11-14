@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import * as constants from '../constants/constants'
+import { Redirect } from 'react-router-dom'
 
 class EditFormBase extends Component {
     constructor(props){
@@ -39,6 +40,14 @@ class EditFormBase extends Component {
         }
 
         this.props.saveAction(this.state);
+    }
+
+    checkStatusAndReturn(value){
+        if(this.props.categoryFormStatus === constants.formStatus.sucess){
+            return <Redirect to={this.props.backUrl}/>
+        }
+
+        return value;
     }
 }
 

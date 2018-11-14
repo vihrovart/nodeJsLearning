@@ -14,3 +14,9 @@ export const formStatus = {
     sucess: "SUCESS",
     fail: "FAIL"
 }
+
+export const stateProperty = {
+    items: "items",
+    formStatus: "formStatus",
+    item: "item"
+}

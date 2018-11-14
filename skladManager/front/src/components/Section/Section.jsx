@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import ViewForm from './ViewForm';
+import ViewForm from '../ViewForm';
+import itemLoad from "../hoc/itemLoad";
 
 class Section extends Component {
     render(){
@@ -15,4 +16,4 @@ class Section extends Component {
     }
 }
 
-export default Section;
+export default  itemLoad(Section);

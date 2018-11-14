@@ -2,12 +2,11 @@ import React from 'react';
 import itemLoad from "../hoc/itemLoad";
 import EditFormBase from '../EditFormBase'
 
-class CategoryEditForm extends EditFormBase {
+class SectionEditForm extends EditFormBase {
     getState(){
         var title = this.getValueOrDefault("title");
-        var color = this.getValueOrDefault("color");
 
-        return {title: title, color: color};
+        return {title: title};
     }
 
     render() {
@@ -16,7 +15,6 @@ class CategoryEditForm extends EditFormBase {
         return this.checkStatusAndReturn(
             <div>
                 <div>Название : <input type='text' value={this.state.title} datafieldname="title" onChange={this.handleFieldChange}></input></div>
-                <div>Цвет : <input type='text' value={this.state.color} datafieldname="color" onChange={this.handleFieldChange}></input></div>
                 <div>Отменить</div>
                 <button onClick={this.save}>Сохранить</button>
             </div>
@@ -24,4 +22,4 @@ class CategoryEditForm extends EditFormBase {
     }
 }
 
-export default  itemLoad(CategoryEditForm);
+export default  itemLoad(SectionEditForm);

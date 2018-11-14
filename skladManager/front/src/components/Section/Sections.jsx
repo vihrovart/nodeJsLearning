@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ItemList from "./ItemsList";
+import ItemList from "../ItemsList";
 
 export default class Sections extends Component {
     render (){

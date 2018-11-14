@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import * as constants from '../constants/constants'
-
 class ElementFormField extends Component {
     constructor(props){
         super(props);
@@ -20,6 +18,8 @@ class ViewForm extends Component {
     constructor(props){
         super(props);
 
+        console.log("VF", this.props);
+        
         this.state = { item: this.props.item, isLoading: true , fields: this.getFields()}
     }
 
