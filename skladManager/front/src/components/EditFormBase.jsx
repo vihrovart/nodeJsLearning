@@ -12,6 +12,7 @@ class EditFormBase extends Component {
         this.save = this.save.bind(this);
         this.isEdit = this.isEdit.bind(this);
         this.getValueOrDefault = this.getValueOrDefault.bind(this);
+        this.cancel = this.cancel.bind(this);
     }
 
     getState(){
@@ -42,12 +43,26 @@ class EditFormBase extends Component {
         this.props.saveAction(this.state);
     }
 
+    cancel(){
+        this.setState({ 'goBack': true });
+    }
+
+    buttonBlock(){
+        return (
+            [
+            <br />,
+            <button onClick={this.cancel}>Отмена</button>,
+            <button onClick={this.save}>Сохранить</button>
+            ]
+        );
+    }
+
     checkStatusAndReturn(value){
-        if(this.props.categoryFormStatus === constants.formStatus.sucess){
+        if(this.props.formStatus === constants.formStatus.sucess || this.state.goBack){
             return <Redirect to={this.props.backUrl}/>
         }
 
-        return value;
+        return [ value , this.buttonBlock() ];
     }
 }
 

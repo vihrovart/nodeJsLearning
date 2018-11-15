@@ -5,6 +5,8 @@ import * as constants from '../../constants/constants';
 function itemLoad(Component){
     class ItemLoad extends React.Component {
         componentDidMount(){
+            console.log(this.props);
+            
             if(this.props.mode ===  constants.formMode.edit || this.props.mode ===  constants.formMode.read){
                 this.props.getItem(this.props.routeProps.match.params.id);
             }

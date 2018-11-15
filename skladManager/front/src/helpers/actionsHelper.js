@@ -1,3 +1,5 @@
+import React from 'react';
+import { Switch, Route } from 'react-router-dom'
 import { ofType } from 'redux-observable'
 import { ajax } from 'rxjs/observable/dom/ajax'
 import { Map } from 'immutable'
@@ -155,27 +157,27 @@ export function EntryReducer(actionType){
 export function ItemActions(actionsType){
     return {
         // Add item
-        addItem: function(item) {
+        [constants.actions.addItem]: function(item) {
             return { type: actionsType[operations.addItem], item};
         },
 
         // Get all items
-        getItems: function() {
+        [constants.actions.getItems]: function() {
             return {type: actionsType[operations.getItems]};
         },
 
         // Get item by id
-        getItem: function(id){
+        [constants.actions.getItem]: function(id){
             return { type: actionsType[operations.getItem], id};
         },
 
         // Put item
-        putItem: function(id, item){
+        [constants.actions.putItem]: function(id, item){
             return { type: actionsType[operations.putItem], id, item};
         },
 
         // Delete item
-        delItem: function(id){
+        [constants.actions.delItem]: function(id){
             return { type: actionsType[operations.delItem], id };
         },
 
@@ -185,14 +187,68 @@ export function ItemActions(actionsType){
     }
 }
 
+// Создать роуты Crud для сущности
+export function EntryRoute(thisProps, ItemsComponent, ViewItemComponent, EditItemComponent, prefix){
+    var items = thisProps[prefix][constants.stateProperty.items];
+    var item = thisProps[prefix][constants.stateProperty.item];
+    var formStatus = thisProps[prefix][constants.stateProperty.formStatus];
+    
+    var getItems = thisProps[this.makeActionName(prefix, constants.actions.getItems)];
+    var deleteAction = thisProps[this.makeActionName(prefix, constants.actions.delItem)];
+    var putAction = thisProps[this.makeActionName(prefix, constants.actions.putItem)];
+    var addAction = thisProps[this.makeActionName(prefix, constants.actions.addItem)];
+    var getItem = thisProps[this.makeActionName(prefix, constants.actions.getItem)];
+
+    return (
+        <Switch>
+                <Route exact path={`/${prefix}/`} render={(props) => 
+                    <ItemsComponent 
+                        routeProps={props} 
+                        items={items} 
+                        getItems={getItems}
+                        deleteAction={deleteAction} />} 
+                />
+                <Route path={`/${prefix}/edit/:id`} render={(props) => 
+                    <EditItemComponent 
+                        mode={constants.formMode.edit}
+                        routeProps={props} 
+                        getItem={getItem} 
+                        item={item}
+                        saveAction={putAction}
+                        backUrl={`/${prefix}`}
+                        formStatus={formStatus} />} 
+                />
+                <Route path={`/${prefix}/create`} render={(props) => 
+                    <EditItemComponent 
+                        mode={constants.formMode.create} 
+                        routeProps={props} 
+                        saveAction={addAction}
+                        backUrl={`/${prefix}`}
+                        formStatus={formStatus} />} 
+                />
+                <Route path={`/${prefix}/:id`} render={(props) => 
+                    <ViewItemComponent
+                        mode={constants.formMode.read}
+                        routeProps={props} 
+                        getItem={getItem} 
+                        item={item} />} 
+                />
+            </Switch>
+    );
+}
+
+export function makeActionName(prefix, action){
+    return `${prefix}_${action}`;
+}
+
 // Построить экшн креэйтор для сущности
 export function makeActionCreator(itemActions){
     var prefix = itemActions.getPrefix();
         return {
-            [`${prefix}_addItem`]: (item) => itemActions.addItem(item),
-            [`${prefix}_getItems`]: () => itemActions.getItems(),
-            [`${prefix}_getItem`]: (id) => itemActions.getItem(id),
-            [`${prefix}_putItem`]: (id, item) => itemActions.putItem(id, item),
-            [`${prefix}_delItem`]: (id) => itemActions.delItem(id)
+            [makeActionName(prefix, constants.actions.addItem)]: (item) => itemActions[constants.actions.addItem](item),
+            [makeActionName(prefix, constants.actions.getItems)]: () => itemActions[constants.actions.getItems](),
+            [makeActionName(prefix, constants.actions.getItem)]: (id) => itemActions[constants.actions.getItem](id),
+            [makeActionName(prefix, constants.actions.putItem)]: (id, item) => itemActions[constants.actions.putItem](id, item),
+            [makeActionName(prefix, constants.actions.delItem)]: (id) => itemActions[constants.actions.delItem](id)
     }
 }

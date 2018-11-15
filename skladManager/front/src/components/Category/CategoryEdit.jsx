@@ -17,8 +17,6 @@ class CategoryEditForm extends EditFormBase {
             <div>
                 <div>Название : <input type='text' value={this.state.title} datafieldname="title" onChange={this.handleFieldChange}></input></div>
                 <div>Цвет : <input type='text' value={this.state.color} datafieldname="color" onChange={this.handleFieldChange}></input></div>
-                <div>Отменить</div>
-                <button onClick={this.save}>Сохранить</button>
             </div>
         );
     }

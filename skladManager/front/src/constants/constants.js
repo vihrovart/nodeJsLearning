@@ -20,3 +20,11 @@ export const stateProperty = {
     formStatus: "formStatus",
     item: "item"
 }
+
+export const actions = {
+    addItem: "addItem",
+    getItems: "getItems",
+    getItem: "getItem",
+    putItem: "putItem",
+    delItem: "delItem"
+}

@@ -17,8 +17,6 @@ class ElementFormField extends Component {
 class ViewForm extends Component {
     constructor(props){
         super(props);
-
-        console.log("VF", this.props);
         
         this.state = { item: this.props.item, isLoading: true , fields: this.getFields()}
     }
